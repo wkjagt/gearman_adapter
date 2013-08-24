@@ -16,7 +16,7 @@ Purpose:
 import gearman_wrapper
 
 client = gearman_adapter.get_client()
-client.submit_job('some_task', {"key" : "value"}, wait_until_complete=False)
+client.submit_async_job('some_task', {"key" : "value"})
 ```
 
 ###Worker usage
