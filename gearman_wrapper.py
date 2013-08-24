@@ -1,6 +1,6 @@
 import gearman, pickle
-
-servers = ['localhost:4730']
+import sentinelapp.settings
+from gearman.constants import PRIORITY_NONE
 
 class PickleDataEncoder(gearman.DataEncoder):
     @classmethod
@@ -14,11 +14,12 @@ class PickleDataEncoder(gearman.DataEncoder):
 class Client(gearman.GearmanClient):
     data_encoder = PickleDataEncoder
 
+    def submit_async_job(self, task, data, unique=None, priority=PRIORITY_NONE, background=False, max_retries=0, poll_timeout=None):
+        return super(Client, self).submit_job(task, data, unique=unique, priority=priority, background=background, wait_until_complete=False, max_retries=0, poll_timeout=None)
 
 class Worker(gearman.GearmanWorker):
 
     data_encoder = PickleDataEncoder
-
 
     def on_job_execute(self, current_job):
         task = current_job.task
@@ -45,7 +46,7 @@ class Worker(gearman.GearmanWorker):
 
 
 def get_client():
-    return Client(servers)
+    return Client(sentinelapp.settings.GEARMAN_SERVERS)
 
 def get_worker():
-    return Worker(servers)
+    return Worker(sentinelapp.settings.GEARMAN_SERVERS)
