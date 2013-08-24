@@ -1,4 +1,4 @@
-gearman_adapter
+Gearman Adapter
 ===============
 
 Convenient python wrapper for [gearman](http://gearman.org).
