@@ -7,6 +7,7 @@ Purpose:
 
 1. Have the gearman server address(es) in one place
 2. Support sending of python objects to workers
+3. Have a slightly shorter way to register asynchronous jobs
 
 
 ###Client usage:
